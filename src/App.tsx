@@ -1,68 +1,68 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Home, Contatti, About, Products, Cart } from './pages'
+import { Home, Contatti, About, Products, Cart, Login, Profile } from './pages'
 import ProductId from './pages/ProductId';
+import { AuthProvider, useAuth } from './context';
 
 export const App = () => {
     return (
-        <div>
-            <div >
-                <BrowserRouter>
-                    {/* Inserisci qui il menu di navigazione */}
-                    <nav className="bg-slate-900 text-white text-center flex gap-4 items-center justify-start p-4">
-                        <Link to="/" className="hover:text-slate-600 text-white font-bold py-2 px-4">
-                            Home
-                        </Link>
-                        {// Esercizio 2: Catalogo Prodotti
-                            /*
-                            Crea un catalogo prodotti con:
-                            - Lista prodotti (/products)
-                            - Dettaglio prodotto (/product/:id)
-                            - Carrello (/cart)
+        <AuthProvider>
+            <BrowserRouter>
+                {/* Inserisci qui il menu di navigazione */}
+                <Navigation />
+                <div className='mt-7'>
+                    <Routes>
+                        {/* Inserisci qui le routes */}
+                        <Route path="/" element={<Home />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/products/:id" element={<ProductId />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contatti" element={<Contatti />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="*" element={<h1>404 - Not Found</h1>} />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </AuthProvider>
+    );
+};
 
-                            Funzionalità ad implementare:
-                            - Navigazione tra le pagine
-                            - Uso di useParams per il dettaglio prodotto
-                            - Uso di useNavigate per tornare alla lista */
-                        }
-                        <Link to="/products" className="hover:text-slate-600 text-white font-bold py-2 px-4">
-                            Prodotti
-                        </Link>
-                        <Link to="/cart" className="hover:text-slate-600 text-white font-bold py-2 px-4">
-                            Carrello
-                        </Link>
-                        <Link to="/about" className="hover:text-slate-600 text-white font-bold py-2 px-4">
-                            About
-                        </Link>
-                        <Link to="/contatti" className="hover:text-slate-600 text-white font-bold py-2 px-4">
-                            Contatti
-                        </Link>
-                    </nav>
+const Navigation = () => {
+    const { isLoggedIn } = useAuth(); // Moved inside Navigation component
 
-                    <div className='mt-7'>
-                        <Routes>
-                            {/* Inserisci qui le routes */}
-                            <Route path="/" element={
-                                <Home />
-                            } />
-                            <Route path="/products" element={
-                                <Products />
-                            } />
-                            <Route path="/products/:id" element={
-                                <ProductId />
-                            } />
-                            <Route path="/cart" element={
-                                <Cart />
-                            } />
-                            <Route path="/about" element={
-                                <About />
-                            } />
-                            <Route path="/contatti" element={
-                                <Contatti />
-                            } />
-                        </Routes>
-                    </div>
-                </BrowserRouter>
-            </div>
-        </div>
+    return (
+        <nav className="bg-slate-900 text-white text-center flex gap-4 items-center justify-start p-4">
+            <Link to="/" className="hover:text-slate-600 text-white font-bold py-2 px-4">
+                Home
+            </Link>
+            <Link to="/products" className="hover:text-slate-600 text-white font-bold py-2 px-4">
+                Prodotti
+            </Link>
+            <Link to="/cart" className="hover:text-slate-600 text-white font-bold py-2 px-4">
+                Carrello
+            </Link>
+            <Link to="/about" className="hover:text-slate-600 text-white font-bold py-2 px-4">
+                About
+            </Link>
+            <Link to="/contatti" className="hover:text-slate-600 text-white font-bold py-2 px-4">
+                Contatti
+            </Link>
+            {isLoggedIn ? (
+                <Link to="/profile" className="hover:text-slate-600 text-white font-bold py-2 px-4 ml-auto flex items-center">
+                    <span>Profile</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 10a4 4 0 100-8 4 4 0 000 8zm-6 8a6 6 0 1112 0H4z" clipRule="evenodd" />
+                    </svg>
+                </Link>
+            ) : (
+                <Link to="/login" className="hover:text-slate-600 text-white font-bold py-2 px-4 ml-auto flex items-center">
+                    <span>Login</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 10a4 4 0 100-8 4 4 0 000 8zm-6 8a6 6 0 1112 0H4z" clipRule="evenodd" />
+                    </svg>
+                </Link>
+            )}
+        </nav>
     );
 };
