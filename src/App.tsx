@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Home, Contatti, About, Products, Cart, Login, Profile } from './pages'
-import ProductId from './pages/ProductId';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Home, Contatti, About, Products, Cart, Login, Profile, ProductId, Checkout, Shipping, /*Payment, Confirmation*/ } from './pages'
 import { AuthProvider, useAuth } from './context';
+import { Breadcrumbs } from './Components';
 
 export const App = () => {
     return (
@@ -10,6 +10,7 @@ export const App = () => {
                 {/* Inserisci qui il menu di navigazione */}
                 <Navigation />
                 <div className='mt-7'>
+                    <Breadcrumbs />
                     <Routes>
                         {/* Inserisci qui le routes */}
                         <Route path="/" element={<Home />} />
@@ -20,11 +21,19 @@ export const App = () => {
                         <Route path="/contatti" element={<Contatti />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/checkout" element={<Checkout />}>
+                            <Route path="shipping" element={<Shipping />}>
+                                {/* <Route path="payment" element={<Payment />}>
+                                    <Route path="confirmation" element={<Confirmation />} />
+                            </Route> */}
+                            </Route>
+                            <Route index element={<Navigate to="shipping" />} /> {/* Default to Shipping */}
+                        </Route>
                         <Route path="*" element={<h1>404 - Not Found</h1>} />
                     </Routes>
                 </div>
             </BrowserRouter>
-        </AuthProvider>
+        </AuthProvider >
     );
 };
 

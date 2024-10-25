@@ -6,3 +6,7 @@ export * from "./Cart";
 export * from "./ProductId";
 export * from "./Login";
 export * from "./Profile";
+export * from "./Checkout";
+export * from "./Shipping";
+// export * from "./Payment";
+// export * from "./Confirmation";
