@@ -8,5 +8,5 @@ export * from "./Login";
 export * from "./Profile";
 export * from "./Checkout";
 export * from "./Shipping";
-// export * from "./Payment";
+export * from "./Payment";
 // export * from "./Confirmation";

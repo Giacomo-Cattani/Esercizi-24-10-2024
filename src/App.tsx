@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
-import { Home, Contatti, About, Products, Cart, Login, Profile, ProductId, Checkout, Shipping, /*Payment, Confirmation*/ } from './pages'
+import { Home, Contatti, About, Products, Cart, Login, Profile, ProductId, Checkout, Shipping, Payment/*, Confirmation*/ } from './pages'
 import { AuthProvider, useAuth } from './context';
 import { Breadcrumbs } from './Components';
 
@@ -22,12 +22,12 @@ export const App = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/checkout" element={<Checkout />}>
-                            <Route path="shipping" element={<Shipping />}>
-                                {/* <Route path="payment" element={<Payment />}>
-                                    <Route path="confirmation" element={<Confirmation />} />
-                            </Route> */}
-                            </Route>
                             <Route index element={<Navigate to="shipping" />} /> {/* Default to Shipping */}
+                            <Route path="shipping" element={<Shipping />}>
+                                <Route path="payment" element={<Payment />}>
+                                    {/* <Route path="confirmation" element={<Confirmation />} /> */}
+                                </Route>
+                            </Route>
                         </Route>
                         <Route path="*" element={<h1>404 - Not Found</h1>} />
                     </Routes>

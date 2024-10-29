@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export const Shipping: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -102,11 +102,13 @@ export const Shipping: React.FC = () => {
                 <button
                     type="submit"
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-                    onClick={() => navigate('/checkout/shipping/payment')}
+                // onClick={() => navigate('/checkout/shipping/payment')}
                 >
                     Next
                 </button>
             </form>
+
+            <Outlet />
         </div>
     );
 };
